@@ -32,7 +32,17 @@ const VideoAssistantQA = ({ videoContext }) => {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const endOfMessagesRef = useRef(null);
+  const chatContainerRef = useRef(null);
+
+  useEffect(() => {
+    const rafId = requestAnimationFrame(() => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+    });
+
+    return () => cancelAnimationFrame(rafId);
+  }, [messages, isTyping]);
 
   // Reset chat if the video changes
   useEffect(() => {
@@ -131,7 +141,7 @@ Answer the user's question accurately based on this context. Keep your response 
       </div>
 
       {/* Chat Area */}
-      <div style={{
+      <div ref={chatContainerRef} style={{
         flex: 1,
         padding: '16px',
         overflowY: 'auto',
@@ -186,7 +196,6 @@ Answer the user's question accurately based on this context. Keep your response 
            </div>
          </div>
         )}
-        <div ref={endOfMessagesRef} />
       </div>
 
       {/* Input Area */}

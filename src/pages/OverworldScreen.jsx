@@ -11,11 +11,11 @@ const animURL = id => `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprite
 
 // Map nodes layout (relative percentages)
 const ZONES = [
-  { id: 1, x: 20, y: 70, name: 'Statistics Plains' },
-  { id: 2, x: 45, y: 55, name: 'Python Peak' },
-  { id: 3, x: 75, y: 60, name: 'ML Forest' },
-  { id: 4, x: 80, y: 30, name: 'Deep Learning Cave' },
-  { id: 5, x: 40, y: 20, name: 'Viz Waterfall' },
+  { id: 1, x: 26, y: 70, name: 'Statistics Plains' },
+  { id: 2, x: 44, y: 55, name: 'Python Peak' },
+  { id: 3, x: 68, y: 61, name: 'ML Forest' },
+  { id: 4, x: 73, y: 33, name: 'Deep Learning Cave' },
+  { id: 5, x: 39, y: 22, name: 'Viz Waterfall' },
 ];
 
 export const MAP_ENCOUNTERS = {
@@ -137,36 +137,38 @@ const OverworldScreen = () => {
     <div className="screen active" id="map-screen">
       <HUD />
       <div className="map-container">
-        <div className="map-bg"></div>
-        
-        {renderPaths()}
+        <div className="map-playfield">
+          <div className="map-bg"></div>
 
-        {ZONES.map(z => {
-          let isLocked = false;
-          if (z.id > 1) {
-            const prevModule = MODULES.find(m => m.zone === z.id - 1);
-            if (prevModule && !completedModules.includes(prevModule.id)) {
-              isLocked = true;
+          {renderPaths()}
+
+          {ZONES.map(z => {
+            let isLocked = false;
+            if (z.id > 1) {
+              const prevModule = MODULES.find(m => m.zone === z.id - 1);
+              if (prevModule && !completedModules.includes(prevModule.id)) {
+                isLocked = true;
+              }
             }
-          }
 
-          return (
-            <div 
-              key={z.id}
-              className={`zone-node ${z.id === currentZone ? 'active' : ''} ${isLocked ? 'locked' : ''}`}
-              style={{ left: `${z.x}%`, top: `${z.y}%` }}
-              onClick={() => handleZoneClick(z)}
-            >
-              <div className="zone-icon">
-                {(() => {
-                  const m = MODULES.find(mod => mod.zone === z.id);
-                  return m ? <img src={animURL(m.pokemon.id)} onError={(e) => { e.target.src = staticURL(m.pokemon.id); }} alt={m.pokemon.name} /> : '📍';
-                })()}
+            return (
+              <div
+                key={z.id}
+                className={`zone-node ${z.id === currentZone ? 'active' : ''} ${isLocked ? 'locked' : ''}`}
+                style={{ left: `${z.x}%`, top: `${z.y}%` }}
+                onClick={() => handleZoneClick(z)}
+              >
+                <div className="zone-icon">
+                  {(() => {
+                    const m = MODULES.find(mod => mod.zone === z.id);
+                    return m ? <img src={animURL(m.pokemon.id)} onError={(e) => { e.target.src = staticURL(m.pokemon.id); }} alt={m.pokemon.name} /> : '📍';
+                  })()}
+                </div>
+                <div className="zone-label">{z.name}</div>
               </div>
-              <div className="zone-label">{z.name}</div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
