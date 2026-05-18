@@ -424,4 +424,395 @@ export const MODULES = [
       },
     ],
   },
+  {
+    id: 'm6',
+    zone: 6,
+    icon: '🌐',
+    name: 'Web Development Foundations',
+    subtitle: 'Build the modern web',
+    color: 'var(--water)',
+    type: 'water',
+    tags: ['Beginner', 'Core', '8 hrs'],
+    desc: 'HTML, CSS, JavaScript, and React basics for building interactive web applications.',
+    xpReward: 160,
+    pokemon: { id: 134, name: 'Vaporeon' },
+    topicIds: ['webdev'],
+    sections: [
+      {
+        id: 's1',
+        title: 'HTML & CSS',
+        concepts: [
+          {
+            title: 'Semantic HTML',
+            icon: '📄',
+            body: 'Use the right tags for the right job (header, nav, main, article) to improve accessibility and SEO.',
+            scenario: '<strong>Scenario:</strong> Using a button tag instead of a div for a clickable element ensures screen readers and keyboards can interact with it properly.',
+          }
+        ],
+        video: { id: 'mU6anWqZJcc', title: 'HTML & CSS Full Course', channel: 'freeCodeCamp', duration: '11 hrs', transcript: 'Learn HTML and CSS from scratch...' },
+        quiz: [
+          {
+            q: 'Which tag should you use for a top-level heading?',
+            opts: ['<header>', '<h1>', '<title>', '<top>'],
+            correct: 1,
+            explain: 'The <h1> tag represents the main heading of the page.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm7',
+    zone: 7,
+    icon: '🛡️',
+    name: 'Cybersecurity Basics',
+    subtitle: 'Protect systems and data',
+    color: 'var(--electric)',
+    type: 'electric',
+    tags: ['Intermediate', 'Security', '6 hrs'],
+    desc: 'Understand network security, cryptography, and best practices to defend against cyber threats.',
+    xpReward: 180,
+    pokemon: { id: 135, name: 'Jolteon' },
+    topicIds: ['cyber'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Cryptography',
+        concepts: [
+          {
+            title: 'Public Key Encryption',
+            icon: '🔑',
+            body: 'A cryptographic system that uses pairs of keys: public keys which may be disseminated widely, and private keys which are known only to the owner.',
+            scenario: '<strong>Scenario:</strong> Alice encrypts a message with Bob\'s public key, and only Bob can decrypt it with his private key.',
+          }
+        ],
+        video: { id: 'AQDCe585Lnc', title: 'Cryptography Tutorial', channel: 'Simplilearn', duration: '45 min', transcript: 'Introduction to Cryptography...' },
+        quiz: [
+          {
+            q: 'In public key cryptography, which key is used to encrypt a message intended for a specific recipient?',
+            opts: ['Sender\'s private key', 'Recipient\'s private key', 'Recipient\'s public key', 'Sender\'s public key'],
+            correct: 2,
+            explain: 'You use the recipient\'s public key to encrypt the message so only their private key can decrypt it.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm8',
+    zone: 8,
+    icon: '💰',
+    name: 'Financial Modeling',
+    subtitle: 'Analyze financial performance',
+    color: 'var(--grass)',
+    type: 'grass',
+    tags: ['Advanced', 'Finance', '10 hrs'],
+    desc: 'Learn valuation techniques, DCF analysis, and algorithmic trading concepts.',
+    xpReward: 200,
+    pokemon: { id: 133, name: 'Eevee' },
+    topicIds: ['finance'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Discounted Cash Flow',
+        concepts: [
+          {
+            title: 'Time Value of Money',
+            icon: '⏳',
+            body: 'A dollar today is worth more than a dollar tomorrow due to its potential earning capacity.',
+            scenario: '<strong>Scenario:</strong> You use a discount rate to find the present value of expected future cash flows.',
+          }
+        ],
+        video: { id: '3q1H9YwJp_w', title: 'Financial Modeling Explained', channel: 'Corporate Finance Institute', duration: '20 min', transcript: 'DCF analysis explained...' },
+        quiz: [
+          {
+            q: 'What is the core principle behind DCF?',
+            opts: ['Stock prices always go up', 'Time value of money', 'Dividends are guaranteed', 'Inflation is constant'],
+            correct: 1,
+            explain: 'DCF relies on the time value of money to calculate present value.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm9',
+    zone: 9,
+    icon: '⚕️',
+    name: 'Health Data Analytics',
+    subtitle: 'Improve patient outcomes',
+    color: 'var(--fire)',
+    type: 'fire',
+    tags: ['Intermediate', 'Healthcare', '8 hrs'],
+    desc: 'Explore medical imaging, electronic health records, and predictive models in healthcare.',
+    xpReward: 170,
+    pokemon: { id: 136, name: 'Flareon' },
+    topicIds: ['health'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Electronic Health Records',
+        concepts: [
+          {
+            title: 'Data Interoperability',
+            icon: '🏥',
+            body: 'The ability of different information systems to connect and share data securely.',
+            scenario: '<strong>Scenario:</strong> Using HL7 FHIR standards to allow a hospital app to read data from a clinic\'s EHR system.',
+          }
+        ],
+        video: { id: 'P8r_hRhyG_E', title: 'Health Informatics Basics', channel: 'Health IT', duration: '15 min', transcript: 'Health IT and interoperability...' },
+        quiz: [
+          {
+            q: 'What does interoperability in healthcare refer to?',
+            opts: ['Doctors working longer hours', 'Systems sharing and using data securely', 'Reducing the cost of medication', 'Building new hospitals'],
+            correct: 1,
+            explain: 'Interoperability is about seamless data exchange between health systems.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm10',
+    zone: 10,
+    icon: '🎓',
+    name: 'Learning Sciences',
+    subtitle: 'Design effective education',
+    color: 'var(--psychic)',
+    type: 'psychic',
+    tags: ['Beginner', 'Education', '5 hrs'],
+    desc: 'Understand cognitive load theory, instructional design, and learning analytics.',
+    xpReward: 140,
+    pokemon: { id: 150, name: 'Mewtwo' },
+    topicIds: ['edu'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Cognitive Load Theory',
+        concepts: [
+          {
+            title: 'Working Memory Limits',
+            icon: '🧠',
+            body: 'Human working memory can only hold a small amount of information at a time.',
+            scenario: '<strong>Scenario:</strong> Breaking a complex lesson into small, digestible chunks (chunking) to prevent overwhelming students.',
+          }
+        ],
+        video: { id: 'x3fK2R00Ww0', title: 'Cognitive Load Theory', channel: 'Education Week', duration: '5 min', transcript: 'How the brain learns...' },
+        quiz: [
+          {
+            q: 'What is the primary goal of managing cognitive load?',
+            opts: ['To make tests harder', 'To optimize the use of working memory', 'To reduce reading time', 'To replace teachers with AI'],
+            correct: 1,
+            explain: 'Managing cognitive load helps optimize working memory for better learning.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm11',
+    zone: 11,
+    icon: '🛒',
+    name: 'Supply Chain Optimization',
+    subtitle: 'Streamline e-commerce',
+    color: 'var(--grass)',
+    type: 'grass',
+    tags: ['Intermediate', 'Retail', '7 hrs'],
+    desc: 'Inventory management, logistics planning, and recommendation engines for retail.',
+    xpReward: 160,
+    pokemon: { id: 143, name: 'Snorlax' },
+    topicIds: ['retail'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Inventory Management',
+        concepts: [
+          {
+            title: 'Just-in-Time (JIT)',
+            icon: '📦',
+            body: 'An inventory strategy aligned with production schedules to reduce waste and warehousing costs.',
+            scenario: '<strong>Scenario:</strong> Ordering parts only as they are needed for assembly, minimizing storage needs.',
+          }
+        ],
+        video: { id: 'g0M1R4xT-3E', title: 'Supply Chain Management', channel: 'MIT OpenCourseWare', duration: '50 min', transcript: 'Logistics and supply chain...' },
+        quiz: [
+          {
+            q: 'What is a key benefit of JIT inventory?',
+            opts: ['Higher storage costs', 'Reduced warehousing costs', 'More surplus stock', 'Longer production times'],
+            correct: 1,
+            explain: 'JIT minimizes the amount of stock held, thus reducing warehousing costs.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm12',
+    zone: 12,
+    icon: '💼',
+    name: 'Management Consulting 101',
+    subtitle: 'Solve complex business problems',
+    color: 'var(--water)',
+    type: 'water',
+    tags: ['Advanced', 'Consulting', '9 hrs'],
+    desc: 'Frameworks, market sizing, and strategic communication for consultants.',
+    xpReward: 190,
+    pokemon: { id: 131, name: 'Lapras' },
+    topicIds: ['consulting'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Consulting Frameworks',
+        concepts: [
+          {
+            title: 'MECE Principle',
+            icon: '🧩',
+            body: 'Mutually Exclusive, Collectively Exhaustive. A grouping principle for separating items without overlaps while covering all possibilities.',
+            scenario: '<strong>Scenario:</strong> Categorizing customers by age group: 0-18, 19-35, 36-50, 51+ covers everyone without overlaps.',
+          }
+        ],
+        video: { id: 'd7r_W_P10lU', title: 'The MECE Principle', channel: 'Case Interview', duration: '12 min', transcript: 'How to structure problems...' },
+        quiz: [
+          {
+            q: 'What does MECE stand for?',
+            opts: ['Many Elements Combined Equally', 'Mutually Exclusive, Collectively Exhaustive', 'Market Evaluation Competitive Edge', 'Maximum Efficiency Cost Effective'],
+            correct: 1,
+            explain: 'MECE ensures categories do not overlap and cover all possible options.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm13',
+    zone: 13,
+    icon: '🏛️',
+    name: 'Public Policy Analysis',
+    subtitle: 'Data-driven governance',
+    color: 'var(--electric)',
+    type: 'electric',
+    tags: ['Intermediate', 'Government', '6 hrs'],
+    desc: 'Using data to evaluate policy effectiveness and improve public services.',
+    xpReward: 150,
+    pokemon: { id: 145, name: 'Zapdos' },
+    topicIds: ['gov'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Policy Evaluation',
+        concepts: [
+          {
+            title: 'Cost-Benefit Analysis',
+            icon: '⚖️',
+            body: 'A systematic approach to estimating the strengths and weaknesses of alternatives to determine options that provide the best approach to achieving benefits.',
+            scenario: '<strong>Scenario:</strong> Weighing the environmental benefits of a new transit system against its construction costs.',
+          }
+        ],
+        video: { id: '8mC874L9gT0', title: 'Cost-Benefit Analysis', channel: 'EconPlusDal', duration: '8 min', transcript: 'Evaluating public projects...' },
+        quiz: [
+          {
+            q: 'What is the primary purpose of Cost-Benefit Analysis?',
+            opts: ['To maximize costs', 'To systematically compare the pros and cons of alternatives', 'To hide financial data', 'To delay decision making'],
+            correct: 1,
+            explain: 'It helps decision-makers weigh the benefits against the costs objectively.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm14',
+    zone: 14,
+    icon: '🤝',
+    name: 'Impact Measurement',
+    subtitle: 'Quantify social good',
+    color: 'var(--fire)',
+    type: 'fire',
+    tags: ['Beginner', 'Non-profit', '5 hrs'],
+    desc: 'Logic models, outcomes vs outputs, and grant reporting for non-profits.',
+    xpReward: 130,
+    pokemon: { id: 146, name: 'Moltres' },
+    topicIds: ['nonprofit'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Logic Models',
+        concepts: [
+          {
+            title: 'Outputs vs Outcomes',
+            icon: '🎯',
+            body: 'Outputs are what you do (e.g., meals served). Outcomes are the changes that result from what you do (e.g., reduced hunger).',
+            scenario: '<strong>Scenario:</strong> A literacy program measures the number of books distributed (output) and the improvement in reading scores (outcome).',
+          }
+        ],
+        video: { id: '3vT2gC1Zp_w', title: 'Logic Models Explained', channel: 'Nonprofit Ready', duration: '10 min', transcript: 'Planning for impact...' },
+        quiz: [
+          {
+            q: 'In a non-profit context, what is an outcome?',
+            opts: ['The number of flyers handed out', 'The change or impact resulting from an activity', 'The budget spent', 'The staff hired'],
+            correct: 1,
+            explain: 'Outcomes reflect the actual difference made by the program, not just the activities performed.',
+          }
+        ],
+      }
+    ]
+  },
+  {
+    id: 'm15',
+    zone: 15,
+    icon: '📱',
+    name: 'Digital Marketing Strategy',
+    subtitle: 'Engage and convert audiences',
+    color: 'var(--psychic)',
+    type: 'psychic',
+    tags: ['Intermediate', 'Media', '7 hrs'],
+    desc: 'SEO, SEM, content strategy, and marketing analytics.',
+    xpReward: 160,
+    pokemon: { id: 144, name: 'Articuno' },
+    topicIds: ['media'],
+    sections: [
+      {
+        id: 's1',
+        title: 'SEO Fundamentals',
+        concepts: [
+          {
+            title: 'Keyword Intent',
+            icon: '🔍',
+            body: 'Understanding what a user is trying to accomplish when they type a search query (informational, navigational, transactional).',
+            scenario: '<strong>Scenario:</strong> A user searching "buy red shoes" has high transactional intent, whereas "how to tie shoes" is informational.',
+          }
+        ],
+        video: { id: 'DvwHL_TwP00', title: 'SEO for Beginners', channel: 'Ahrefs', duration: '20 min', transcript: 'Search engine optimization...' },
+        quiz: [
+          {
+            q: 'Which search query shows high transactional intent?',
+            opts: ['History of coffee', 'Best coffee shops near me', 'Buy espresso machine online', 'What is Arabica'],
+            correct: 2,
+            explain: '"Buy espresso machine online" clearly indicates the user is ready to make a purchase.',
+          }
+        ],
+      }
+    ]
+  }
 ];
+
+export const getModulesForIndustry = (industry) => {
+  const IND_MAP = {
+    'Technology': ['webdev', 'cyber'],
+    'Finance / Banking': ['finance'],
+    'Healthcare': ['health'],
+    'Education': ['edu'],
+    'Retail / E-commerce': ['retail'],
+    'Consulting': ['consulting'],
+    'Government / Public Sector': ['gov'],
+    'Non-profit': ['nonprofit'],
+    'Media / Entertainment': ['media'],
+  };
+  const specificTopic = IND_MAP[industry] || [];
+  return MODULES.filter(m => {
+    // Core modules (m1 to m5) are included in every path
+    if (['m1', 'm2', 'm3', 'm4', 'm5'].includes(m.id)) return true;
+    // Plus the industry specific module
+    return m.topicIds.some(t => specificTopic.includes(t));
+  });
+};

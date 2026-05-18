@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HUD from '../components/HUD';
 import { useAppStore } from '../store/useAppStore';
 import { useNotifStore } from '../components/Notification';
-import { ASSESS_QS } from '../data/assessQs'; // reusing questions for battle
+import { getAssessQs } from '../data/assessQs'; // reusing questions for battle
 import '../styles/BattleScreen.css';
 
 const staticURL = id => `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${id}.png`;
@@ -24,9 +24,12 @@ const BattleScreen = () => {
     setBattleState,
     addXP,
     addCaught,
-    allCaught
+    allCaught,
+    profile
   } = useAppStore();
   const { showNotif } = useNotifStore();
+
+  const ASSESS_QS = getAssessQs(profile.industry);
 
   const [msg, setMsg] = useState('');
   const [phase, setPhase] = useState('intro'); // intro, action, question, catchAnim, end

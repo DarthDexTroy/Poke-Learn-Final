@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PokeBallsBackground from '../components/PokeBallsBackground';
 import { useAppStore } from '../store/useAppStore';
-import { ASSESS_QS } from '../data/assessQs';
-import { MODULES } from '../data/modules';
+import { getAssessQs } from '../data/assessQs';
+import { getModulesForIndustry } from '../data/modules';
 import '../styles/AssessmentScreen.css';
 
 const spriteURL = id => `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${id}.png`;
@@ -18,8 +18,11 @@ const AssessmentScreen = () => {
     setAssessScore,
     setRank,
     setRecommendations,
-    selectedTopics
+    selectedTopics,
+    profile
   } = useAppStore();
+
+  const ASSESS_QS = getAssessQs(profile.industry);
 
   const [answered, setAnswered] = useState(false);
   const [selectedOpt, setSelectedOpt] = useState(null);
@@ -88,7 +91,8 @@ const AssessmentScreen = () => {
   };
 
   const buildRecommendations = (score, rankStr) => {
-    const scoredModules = MODULES.map(m => {
+    const customModules = getModulesForIndustry(useAppStore.getState().profile.industry);
+    const scoredModules = customModules.map(m => {
       let pts = 0;
       const topicMatch = m.topicIds.some(t => selectedTopics.includes(t));
       if (topicMatch) pts += 3;
@@ -100,7 +104,7 @@ const AssessmentScreen = () => {
     }).sort((a, b) => b.pts - a.pts);
 
     let recs = scoredModules.slice(0, 4).map(m => m.id);
-    if (recs.length < 3) recs = MODULES.slice(0, 3).map(m => m.id);
+    if (recs.length < 3) recs = customModules.slice(0, 3).map(m => m.id);
     setRecommendations(recs);
   };
 

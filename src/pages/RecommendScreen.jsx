@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HUD from '../components/HUD';
 import { useAppStore, saveCurrentUser } from '../store/useAppStore';
-import { MODULES } from '../data/modules';
-import { ASSESS_QS } from '../data/assessQs';
+import { getModulesForIndustry } from '../data/modules';
+import { getAssessQs } from '../data/assessQs';
 import { LogOut, User, BookOpen, Clock, Trophy, BarChart3 } from 'lucide-react';
 import '../styles/RecommendScreen.css';
 
@@ -34,6 +34,9 @@ const RecommendScreen = () => {
 
   // Session timer
   const [sessionMins, setSessionMins] = useState(0);
+
+  const customModules = getModulesForIndustry(profile.industry);
+  const customAssessQs = getAssessQs(profile.industry);
   
   useEffect(() => {
     if (!sessionStartTime) startSession();
@@ -62,7 +65,7 @@ const RecommendScreen = () => {
     navigate('/');
   };
 
-  const pct = ASSESS_QS.length > 0 ? Math.round((assessCorrect / ASSESS_QS.length) * 100) : 0;
+  const pct = customAssessQs.length > 0 ? Math.round((assessCorrect / customAssessQs.length) * 100) : 0;
   const totalMins = (totalMinutes || 0) + sessionMins;
   
   const rankPoke = { beginner: 1, intermediate: 65, advanced: 150 }[rank] || 1;
@@ -73,7 +76,7 @@ const RecommendScreen = () => {
   };
 
   // Skill percentages based on quiz performance and module completion
-  const moduleProgress = MODULES.length > 0 ? Math.round((completedModules.length / MODULES.length) * 100) : 0;
+  const moduleProgress = customModules.length > 0 ? Math.round((completedModules.length / customModules.length) * 100) : 0;
   const quizAccuracy = questionsAnswered > 0 ? Math.round((questionsCorrect / questionsAnswered) * 100) : 0;
   const catchProgress = Math.round((allCaught.length / 25) * 100); // 25 total possible
   const overallSkill = Math.round((moduleProgress * 0.4 + quizAccuracy * 0.35 + Math.min(catchProgress, 100) * 0.25));
@@ -108,7 +111,7 @@ const RecommendScreen = () => {
           <div className="pd-stats-grid">
             <div className="pd-stat-card">
               <div className="pd-stat-icon"><BookOpen size={20} /></div>
-              <div className="pd-stat-value">{completedModules.length}/{MODULES.length}</div>
+              <div className="pd-stat-value">{completedModules.length}/{customModules.length}</div>
               <div className="pd-stat-label">Modules Done</div>
             </div>
             <div className="pd-stat-card">
@@ -178,11 +181,11 @@ const RecommendScreen = () => {
         </div>
 
         <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '9px', color: 'var(--muted)', marginBottom: '14px', letterSpacing: '1px' }}>
-          {recommendedModules.length} MODULES RECOMMENDED · {MODULES.length - recommendedModules.length} OPTIONAL
+          {recommendedModules.length} MODULES RECOMMENDED · {customModules.length - recommendedModules.length} OPTIONAL
         </div>
 
         <div className="modules-grid">
-          {MODULES.map(m => {
+          {customModules.map(m => {
             const isRec = recommendedModules.includes(m.id);
             const isDone = completedModules.includes(m.id);
             const topicMatch = m.topicIds.some(t => selectedTopics.includes(t));

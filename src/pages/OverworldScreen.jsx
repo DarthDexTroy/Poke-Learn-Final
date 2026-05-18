@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HUD from '../components/HUD';
 import { useAppStore } from '../store/useAppStore';
-import { MODULES } from '../data/modules';
+import { getModulesForIndustry } from '../data/modules';
 import { useNotifStore } from '../components/Notification';
 import '../styles/MapScreen.css';
 
@@ -16,6 +16,16 @@ const ZONES = [
   { id: 3, x: 68, y: 61, name: 'ML Forest' },
   { id: 4, x: 73, y: 33, name: 'Deep Learning Cave' },
   { id: 5, x: 39, y: 22, name: 'Viz Waterfall' },
+  { id: 6, x: 15, y: 30, name: 'Web Dev Coast' },
+  { id: 7, x: 10, y: 50, name: 'Cyber Citadel' },
+  { id: 8, x: 15, y: 80, name: 'FinTech Valley' },
+  { id: 9, x: 30, y: 90, name: 'Health Data Hub' },
+  { id: 10, x: 50, y: 85, name: 'EdTech Campus' },
+  { id: 11, x: 70, y: 80, name: 'Retail Warehouse' },
+  { id: 12, x: 85, y: 60, name: 'Consulting Tower' },
+  { id: 13, x: 90, y: 40, name: 'Policy Capitol' },
+  { id: 14, x: 85, y: 20, name: 'Impact Center' },
+  { id: 15, x: 60, y: 10, name: 'Media Studio' },
 ];
 
 export const MAP_ENCOUNTERS = {
@@ -23,27 +33,42 @@ export const MAP_ENCOUNTERS = {
   2: [{id: 4, name: 'Charmander', hp: 50}, {id: 56, name: 'Mankey', hp: 45}, {id: 58, name: 'Growlithe', hp: 55}],
   3: [{id: 7, name: 'Squirtle', hp: 50}, {id: 43, name: 'Oddish', hp: 45}, {id: 48, name: 'Venonat', hp: 50}],
   4: [{id: 65, name: 'Alakazam', hp: 110}, {id: 94, name: 'Gengar', hp: 100}, {id: 104, name: 'Cubone', hp: 70}],
-  5: [{id: 25, name: 'Pikachu', hp: 60}, {id: 120, name: 'Staryu', hp: 50}, {id: 130, name: 'Gyarados', hp: 120}]
+  5: [{id: 25, name: 'Pikachu', hp: 60}, {id: 120, name: 'Staryu', hp: 50}, {id: 130, name: 'Gyarados', hp: 120}],
+  6: [{id: 134, name: 'Vaporeon', hp: 80}, {id: 60, name: 'Poliwag', hp: 40}],
+  7: [{id: 135, name: 'Jolteon', hp: 80}, {id: 81, name: 'Magnemite', hp: 40}],
+  8: [{id: 133, name: 'Eevee', hp: 80}, {id: 52, name: 'Meowth', hp: 40}],
+  9: [{id: 136, name: 'Flareon', hp: 80}, {id: 113, name: 'Chansey', hp: 150}],
+  10: [{id: 150, name: 'Mewtwo', hp: 120}, {id: 63, name: 'Abra', hp: 30}],
+  11: [{id: 143, name: 'Snorlax', hp: 120}, {id: 108, name: 'Lickitung', hp: 60}],
+  12: [{id: 131, name: 'Lapras', hp: 90}, {id: 122, name: 'Mr. Mime', hp: 50}],
+  13: [{id: 145, name: 'Zapdos', hp: 100}, {id: 17, name: 'Pidgeotto', hp: 50}],
+  14: [{id: 146, name: 'Moltres', hp: 100}, {id: 37, name: 'Vulpix', hp: 40}],
+  15: [{id: 144, name: 'Articuno', hp: 100}, {id: 124, name: 'Jynx', hp: 60}]
 };
 
 const OverworldScreen = () => {
   const navigate = useNavigate();
-  const { currentZone, completedModules, setBattleState } = useAppStore();
+  const { currentZone, completedModules, setBattleState, profile } = useAppStore();
   const { showNotif } = useNotifStore();
   
+  const customModules = getModulesForIndustry(profile.industry);
+  const activeZoneIds = customModules.map(m => m.zone);
+  const ACTIVE_ZONES = ZONES.filter(z => activeZoneIds.includes(z.id));
+
   const [spritePos, setSpritePos] = useState({ x: 20, y: 70 });
 
   useEffect(() => {
     // Initial position
-    const z = ZONES.find(z => z.id === currentZone) || ZONES[0];
+    const z = ACTIVE_ZONES.find(z => z.id === currentZone) || ACTIVE_ZONES[0];
     setSpritePos({ x: z.x, y: z.y });
   }, []);
 
   const handleZoneClick = (z) => {
     // Check if zone is locked
-    // Zone N is unlocked if Zone N-1 module is complete
-    if (z.id > 1) {
-      const prevModule = MODULES.find(m => m.zone === z.id - 1);
+    const currentIndex = ACTIVE_ZONES.findIndex(activeZone => activeZone.id === z.id);
+    if (currentIndex > 0) {
+      const prevZoneId = ACTIVE_ZONES[currentIndex - 1].id;
+      const prevModule = customModules.find(m => m.zone === prevZoneId);
       if (prevModule && !completedModules.includes(prevModule.id)) {
         showNotif(`🔒 Zone Locked! Complete "${prevModule.name}" first.`);
         return;
@@ -105,11 +130,11 @@ const OverworldScreen = () => {
           pointerEvents: 'none'
         }}
       >
-        {ZONES.map((z1, i) => {
-          if (i === ZONES.length - 1) return null;
-          const z2 = ZONES[i + 1];
+        {ACTIVE_ZONES.map((z1, i) => {
+          if (i === ACTIVE_ZONES.length - 1) return null;
+          const z2 = ACTIVE_ZONES[i + 1];
 
-          const prevModule = MODULES.find(m => m.zone === z1.id);
+          const prevModule = customModules.find(m => m.zone === z1.id);
           const isUnlocked = prevModule && completedModules.includes(prevModule.id);
 
           return (
@@ -142,10 +167,12 @@ const OverworldScreen = () => {
 
           {renderPaths()}
 
-          {ZONES.map(z => {
+          {ACTIVE_ZONES.map(z => {
             let isLocked = false;
-            if (z.id > 1) {
-              const prevModule = MODULES.find(m => m.zone === z.id - 1);
+            const currentIndex = ACTIVE_ZONES.findIndex(activeZone => activeZone.id === z.id);
+            if (currentIndex > 0) {
+              const prevZoneId = ACTIVE_ZONES[currentIndex - 1].id;
+              const prevModule = customModules.find(m => m.zone === prevZoneId);
               if (prevModule && !completedModules.includes(prevModule.id)) {
                 isLocked = true;
               }
@@ -160,7 +187,7 @@ const OverworldScreen = () => {
               >
                 <div className="zone-icon">
                   {(() => {
-                    const m = MODULES.find(mod => mod.zone === z.id);
+                    const m = customModules.find(mod => mod.zone === z.id);
                     return m ? <img src={animURL(m.pokemon.id)} onError={(e) => { e.target.src = staticURL(m.pokemon.id); }} alt={m.pokemon.name} /> : '📍';
                   })()}
                 </div>
