@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PokeBallsBackground from '../components/PokeBallsBackground';
 import { useAppStore } from '../store/useAppStore';
 import { getAssessQs } from '../data/assessQs';
-import { getModulesForIndustry } from '../data/modules';
+import { getModulesForTopics } from '../data/modules';
 import '../styles/AssessmentScreen.css';
 
 const spriteURL = id => `https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${id}.png`;
@@ -22,7 +22,8 @@ const AssessmentScreen = () => {
     profile
   } = useAppStore();
 
-  const ASSESS_QS = getAssessQs(profile.industry);
+  // Build questions from the user's selected topics (not industry)
+  const ASSESS_QS = getAssessQs(selectedTopics);
 
   const [answered, setAnswered] = useState(false);
   const [selectedOpt, setSelectedOpt] = useState(null);
@@ -91,20 +92,21 @@ const AssessmentScreen = () => {
   };
 
   const buildRecommendations = (score, rankStr) => {
-    const customModules = getModulesForIndustry(useAppStore.getState().profile.industry);
-    const scoredModules = customModules.map(m => {
+    // Use topic-filtered modules instead of industry-filtered
+    const topicModules = getModulesForTopics(selectedTopics);
+    const scoredModules = topicModules.map(m => {
       let pts = 0;
       const topicMatch = m.topicIds.some(t => selectedTopics.includes(t));
       if (topicMatch) pts += 3;
-      if (score < 40 && (m.id === 'm1' || m.id === 'm2')) pts += 2;
-      if (score >= 40 && score < 75 && (m.id === 'm3' || m.id === 'm5')) pts += 2;
-      if (score >= 75 && (m.id === 'm4' || m.id === 'm3')) pts += 2;
+      if (score < 40 && m.zone <= 2) pts += 2;
+      if (score >= 40 && score < 75 && m.zone >= 3 && m.zone <= 6) pts += 2;
+      if (score >= 75 && m.zone >= 5) pts += 2;
       pts -= m.zone * 0.1;
       return { ...m, pts };
     }).sort((a, b) => b.pts - a.pts);
 
     let recs = scoredModules.slice(0, 4).map(m => m.id);
-    if (recs.length < 3) recs = customModules.slice(0, 3).map(m => m.id);
+    if (recs.length < 3) recs = topicModules.slice(0, 3).map(m => m.id);
     setRecommendations(recs);
   };
 
@@ -154,7 +156,7 @@ const AssessmentScreen = () => {
         <div className="assessment-box">
           <div className="assess-header">🎓 SKILL PRETEST</div>
           <div className="assess-title">Where do you stand?</div>
-          <div className="assess-sub">Answer 12 questions — we'll recommend modules based on your score.</div>
+          <div className="assess-sub">Answer {ASSESS_QS.length} questions — we'll recommend modules based on your score.</div>
           
           <div className="assess-progress">
             <div className="assess-bar-wrap">

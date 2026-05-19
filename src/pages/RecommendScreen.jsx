@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HUD from '../components/HUD';
 import { useAppStore, saveCurrentUser } from '../store/useAppStore';
-import { getModulesForIndustry } from '../data/modules';
+import { getModulesForTopics } from '../data/modules';
 import { getAssessQs } from '../data/assessQs';
 import { LogOut, User, BookOpen, Clock, Trophy, BarChart3 } from 'lucide-react';
 import '../styles/RecommendScreen.css';
@@ -35,8 +35,8 @@ const RecommendScreen = () => {
   // Session timer
   const [sessionMins, setSessionMins] = useState(0);
 
-  const customModules = getModulesForIndustry(profile.industry);
-  const customAssessQs = getAssessQs(profile.industry);
+  const customModules = getModulesForTopics(selectedTopics);
+  const customAssessQs = getAssessQs(selectedTopics);
   
   useEffect(() => {
     if (!sessionStartTime) startSession();
