@@ -1,0 +1,134 @@
+/* ── MAP OVERWORLD ── */
+#map-screen {
+  background: var(--darker);
+}
+.map-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: radial-gradient(circle at center, #233554 0%, var(--darker) 100%);
+}
+
+.map-playfield {
+  position: relative;
+  width: min(1200px, 94vw);
+  aspect-ratio: 16 / 9;
+  max-height: calc(100vh - 116px);
+  padding: 56px 96px 72px;
+  overflow: visible;
+}
+
+.map-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: center;
+  z-index: 1;
+  transform: perspective(600px) rotateX(60deg) scale(1.5);
+  transform-origin: center bottom;
+  animation: bgScroll 10s linear infinite;
+  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .map-playfield {
+    width: 96vw;
+    max-height: calc(100vh - 108px);
+    padding: 28px 28px 40px;
+  }
+}
+@keyframes bgScroll {
+  from { background-position: 0 0; }
+  to { background-position: 0 60px; }
+}
+
+/* Zone Nodes */
+.zone-node {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s;
+}
+.zone-node:hover { transform: translate(-50%, -50%) scale(1.1); }
+.zone-node.locked { opacity: 0.4; filter: grayscale(1); cursor: not-allowed; }
+.zone-node.locked:hover { transform: translate(-50%, -50%); }
+
+.zone-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(22, 33, 62, 0.9);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.3), 0 0 20px rgba(0,0,0,0.5);
+  margin-bottom: 8px;
+  position: relative;
+  overflow: hidden; /* Prevent sprite from spilling out if it's too big */
+}
+.zone-icon img {
+  width: 120%;
+  height: 120%;
+  image-rendering: pixelated;
+  object-fit: contain;
+  transform: translateY(-5px); /* Centers the pokemon nicely within the crop */
+}
+.zone-node.active .zone-icon {
+  border-color: var(--yellow);
+  box-shadow: 0 8px 0 rgba(255, 214, 10, 0.4), 0 0 30px rgba(255, 214, 10, 0.6);
+  animation: pulseZone 2s infinite;
+}
+@keyframes pulseZone {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.zone-label {
+  background: rgba(0,0,0,0.7);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.zone-node.active .zone-label { color: var(--yellow); border-color: var(--yellow); }
+
+/* Path Lines */
+.map-path {
+  position: absolute;
+  background: rgba(255,255,255,0.2);
+  height: 4px;
+  transform-origin: left center;
+  z-index: 5;
+}
+.map-path.active {
+  background: var(--yellow);
+  box-shadow: 0 0 10px var(--yellow);
+}
+
+/* Character sprite */
+.char-sprite {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: url('https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/versions/generation-iv/heartgold-soulsilver/25.png') center/contain no-repeat;
+  z-index: 15;
+  transform: translate(-50%, calc(-100% - 35px)); /* stands above the map circle node */
+  transition: left 0.8s ease-in-out, top 0.8s ease-in-out;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 2px rgba(0,0,0,0.4));
+}

@@ -1,0 +1,88 @@
+/* ── TITLE ── */
+#title-screen {
+  align-items: center;
+  justify-content: center;
+  background: var(--darker);
+  position: relative;
+  overflow: hidden;
+}
+
+.title-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(230, 57, 70, 0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(0, 150, 199, 0.18) 0%, transparent 60%);
+}
+
+.title-logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(24px, 4.5vw, 50px);
+  color: var(--yellow);
+  text-shadow: 4px 4px 0 var(--darkred);
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 1;
+  animation: titleBounce 2s ease-in-out infinite;
+}
+
+@keyframes titleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.title-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 10px 0 36px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+}
+
+.title-mascot {
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.btn-start {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 16px 42px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 6px 0 var(--darkred), 0 8px 28px rgba(230, 57, 70, 0.5);
+  transition: all 0.1s;
+  animation: btnPulse 2s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+  0%, 100% { box-shadow: 0 6px 0 var(--darkred), 0 8px 24px rgba(230, 57, 70, 0.4); }
+  50% { box-shadow: 0 6px 0 var(--darkred), 0 8px 44px rgba(230, 57, 70, 0.8); }
+}
+
+.btn-start:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--darkred);
+}
+
+.title-footer {
+  margin-top: 28px;
+  position: relative;
+  z-index: 1;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
