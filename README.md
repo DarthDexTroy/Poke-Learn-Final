@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🎓 PokéLearn
 
 > **Learn Data Science. Catch 'em all.**
