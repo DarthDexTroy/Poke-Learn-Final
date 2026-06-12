@@ -1,0 +1,425 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --red: #e63946;
+  --darkred: #c1121f;
+  --yellow: #ffd60a;
+  --blue: #0096c7;
+  --green: #52b788;
+  --dark: #1a1a2e;
+  --darker: #0f0f1a;
+  --card-bg: #16213e;
+  --text: #edf2f4;
+  --muted: #8d99ae;
+  --grass: #52b788;
+  --fire: #f4845f;
+  --water: #0096c7;
+  --psychic: #c77dff;
+  --electric: #f9c74f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--darker);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── SHARED SCREEN STYLES ── */
+.screen {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Screens that need full-page scrolling */
+.scrollable-screen {
+  overflow-y: auto;
+}
+
+/* ── POKEBALLS BG ── */
+.pb-scatter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.pb-float {
+  position: absolute;
+  opacity: 0.13;
+  animation: pbFloat linear infinite;
+}
+@keyframes pbFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}
+
+/* ── HUD ── */
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.07);
+  z-index: 10;
+  flex-shrink: 0;
+}
+.hud-logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--yellow);
+}
+.hud-stats {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.hud-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.xp-bar-wrap {
+  width: 80px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.xp-bar {
+  height: 100%;
+  background: var(--yellow);
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+.hud-nav {
+  display: flex;
+  gap: 6px;
+}
+.nav-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  padding: 7px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.nav-btn.active {
+  background: var(--red);
+  border-color: var(--red);
+}
+.rank-badge {
+  font-size: 8px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.rank-beginner { background: rgba(82, 183, 136, 0.2); color: var(--green); }
+.rank-intermediate { background: rgba(255, 214, 10, 0.2); color: var(--yellow); }
+.rank-advanced { background: rgba(199, 125, 255, 0.2); color: var(--psychic); }
+
+/* ── SHARED FORM SCREEN STYLES ── */
+.form-screen-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 40%, rgba(230, 57, 70, 0.12) 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 60%, rgba(0, 150, 199, 0.12) 0%, transparent 55%);
+}
+.form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 24px 0;
+  min-height: 0;
+  position: relative;
+  z-index: 2;
+}
+.form-container.align-start {
+  align-items: flex-start;
+}
+.form-box {
+  background: rgba(22, 33, 62, 0.97);
+  border: 2px solid rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 560px;
+  width: 92%;
+}
+.form-box::-webkit-scrollbar { width: 4px; }
+.form-box::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 2px; }
+.form-header {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: var(--yellow);
+  margin-bottom: 6px;
+}
+.form-title {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.form-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+.form-field { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.form-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--yellow); }
+.form-input::placeholder { color: var(--muted); }
+select.form-input option { background: var(--card-bg); color: var(--text); }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.form-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--red);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--darkred);
+  transition: all 0.1s;
+  margin-top: 8px;
+}
+.form-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--darkred);
+}
+.form-btn.secondary {
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.form-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.form-divider::before, .form-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.social-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.social-btn {
+  padding: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.form-link {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 12px;
+}
+.form-link span {
+  color: var(--yellow);
+  cursor: pointer;
+  font-weight: 800;
+}
+.form-link span:hover { text-decoration: underline; }
+
+/* ── UTILITIES ── */
+.flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  transition: opacity 0.08s;
+}
+.flash-overlay.show { opacity: 0.45; }
+.screen-trans {
+  position: fixed;
+  inset: 0;
+  background: var(--darker);
+  z-index: 190;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.screen-trans.show { opacity: 1; pointer-events: all; }
+.notif {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: var(--card-bg);
+  border: 2px solid var(--yellow);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  line-height: 1.9;
+  z-index: 180;
+  transform: translateX(220%);
+  transition: transform 0.3s;
+  max-width: 200px;
+}
+.notif.show { transform: translateX(0); }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s;
+}
+.modal-overlay.show { opacity: 1; pointer-events: all; }
+.modal-box {
+  background: #16213e;
+  border: 2px solid rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 500px;
+  width: 92%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+.modal-overlay.show .modal-box { transform: translateY(0); }
+.modal-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--yellow);
+  margin-bottom: 12px;
+}
+.modal-body {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.modal-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-modal {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  padding: 11px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--red); color: #fff; box-shadow: 0 4px 0 var(--darkred); }
+.btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--darkred); }
+.btn-secondary { background: rgba(255, 255, 255, 0.08); color: var(--text); border: 1px solid rgba(255, 255, 255, 0.15); }
+.btn-secondary:active { transform: translateY(2px); }
+
+/* Animated Sprites Utilities */
+.enemy-float { animation: eBob 2.5s ease-in-out infinite; }
+@keyframes eBob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.03); }
+}
+.player-float { animation: pBob 2s ease-in-out infinite; }
+@keyframes pBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes catchBallAnim {
+  0% { transform: translateX(-250px) translateY(80px) scale(0.4) rotate(-360deg); opacity: 0; }
+  30% { transform: translateX(-150px) translateY(-50px) scale(0.7) rotate(-180deg); opacity: 1; }
+  65% { transform: translateX(0) translateY(0) scale(1.0) rotate(0deg); opacity: 1; }
+  85% { transform: translateX(0) translateY(0) scale(1.0) rotate(15deg); opacity: 1; }
+  100% { transform: translateX(0) translateY(0) scale(1.0) rotate(0deg); opacity: 1; }
+}
+
+/* Responsive tweaks */
+@media(max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; }
+}

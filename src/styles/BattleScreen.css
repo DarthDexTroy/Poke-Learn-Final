@@ -1,0 +1,245 @@
+/* ── BATTLE SCREEN ── */
+#battle-screen {
+  background: var(--darker);
+  position: relative;
+  overflow: hidden;
+  display: flex !important;
+  flex-direction: column;
+}
+
+.battle-scene {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+}
+
+.battle-entity {
+  position: absolute;
+}
+
+.enemy-entity {
+  top: 20%;
+  right: 15%;
+  width: 200px;
+  height: 200px;
+}
+
+.player-entity {
+  bottom: 15%;
+  left: 10%;
+  width: 240px;
+  height: 260px;
+}
+
+.battle-platform {
+  display: none;
+}
+
+.player-entity .battle-platform {
+  background: rgba(0,0,0,0.3);
+  width: 240px;
+  height: 100px;
+}
+
+.battle-sprite {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  image-rendering: pixelated;
+  transform-origin: bottom center;
+  object-fit: contain;
+}
+
+.enemy-entity .battle-sprite {
+  width: 130px;
+  height: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player-entity .battle-sprite {
+  width: 170px;
+  height: 170px;
+  left: 35%;
+  transform: translateX(-50%);
+}
+
+/* HP Bars */
+.hp-box {
+  position: absolute;
+  background: rgba(22, 33, 62, 0.9);
+  border: 2px solid var(--dark);
+  border-radius: 8px 8px 8px 0;
+  padding: 10px 14px;
+  min-width: 200px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+}
+
+.hp-box.enemy { top: 10%; left: 10%; }
+.hp-box.player { bottom: 35%; right: 10%; border-radius: 8px 8px 0 8px; }
+
+.hp-name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.hp-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: var(--text);
+}
+
+.hp-lv {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.hp-bar-wrap {
+  width: 100%;
+  height: 10px;
+  background: var(--darker);
+  border: 2px solid var(--muted);
+  border-radius: 6px;
+  padding: 1px;
+}
+
+.hp-bar {
+  height: 100%;
+  background: var(--green);
+  border-radius: 3px;
+  transition: width 0.5s ease-out, background 0.5s;
+}
+
+/* Battle HUD / UI */
+.battle-ui {
+  height: 200px;
+  background: var(--card-bg);
+  border-top: 4px solid var(--dark);
+  display: flex;
+}
+
+.battle-msg {
+  flex: 1;
+  padding: 20px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text);
+  border-right: 4px solid var(--dark);
+  display: flex;
+  align-items: center;
+}
+
+.battle-actions {
+  width: 320px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.battle-btn {
+  background: rgba(255,255,255,0.05);
+  border: none;
+  border-right: 2px solid var(--dark);
+  border-bottom: 2px solid var(--dark);
+  color: var(--text);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.battle-btn:hover:not(:disabled) { background: rgba(255, 214, 10, 0.15); color: var(--yellow); }
+.battle-btn:active:not(:disabled) { background: rgba(255, 214, 10, 0.3); }
+
+.battle-btn.fight { color: var(--red); }
+.battle-btn.catch { color: var(--blue); }
+.battle-btn.run { grid-column: 1 / -1; color: var(--muted); }
+
+/* Catch chance */
+.catch-chance-meter {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Catch Animation Elements */
+.catch-ball {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 50;
+  pointer-events: none;
+}
+
+@keyframes throwBall {
+  0% { top: 60%; left: 15%; transform: scale(2) rotate(0deg); }
+  40% { top: 10%; left: 45%; transform: scale(1.5) rotate(180deg); }
+  100% { top: 30%; left: 75%; transform: scale(1) rotate(360deg); }
+}
+
+@keyframes enemyShrink {
+  0% { transform: translateY(20px) scale(1); filter: brightness(1) sepia(0) hue-rotate(0deg); opacity: 1; }
+  30% { transform: translateY(20px) scale(1); filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5); opacity: 1; }
+  100% { transform: translateY(20px) scale(0); filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5); opacity: 0; }
+}
+
+@keyframes ballDrop {
+  0% { top: 30%; left: 75%; transform: scale(1); }
+  40% { top: 45%; left: 75%; transform: scale(1); }
+  60% { top: 45%; left: 75%; transform: scale(1) scaleY(0.8); }
+  80% { top: 40%; left: 75%; transform: scale(1); }
+  100% { top: 45%; left: 75%; transform: scale(1); }
+}
+
+@keyframes ballShake {
+  0% { top: 45%; left: 75%; transform: translateX(0) rotate(0deg); }
+  20% { top: 45%; left: 75%; transform: translateX(-5px) rotate(-15deg); }
+  40% { top: 45%; left: 75%; transform: translateX(5px) rotate(15deg); }
+  60% { top: 45%; left: 75%; transform: translateX(-2px) rotate(-5deg); }
+  80% { top: 45%; left: 75%; transform: translateX(2px) rotate(5deg); }
+  100% { top: 45%; left: 75%; transform: translateX(0) rotate(0deg); }
+}
+
+@keyframes enemyBreakout {
+  0% { transform: translateY(20px) scale(0); filter: brightness(2); opacity: 0; }
+  50% { transform: translateY(20px) scale(1.2); filter: brightness(2); opacity: 1; }
+  100% { transform: translateY(20px) scale(1); filter: brightness(1); opacity: 1; }
+}
+
+@keyframes ballBurst {
+  0% { top: 45%; left: 75%; filter: brightness(1); transform: scale(1); opacity: 1; }
+  50% { top: 45%; left: 75%; filter: brightness(2); transform: scale(1.5); opacity: 1; }
+  100% { top: 45%; left: 75%; filter: brightness(1); transform: scale(0); opacity: 0; }
+}
+
+@keyframes catchSuccess {
+  0% { top: 45%; left: 75%; filter: brightness(1); }
+  50% { top: 45%; left: 75%; filter: brightness(2) drop-shadow(0 0 15px gold); transform: scale(1.1); }
+  100% { top: 45%; left: 75%; filter: brightness(0.8) drop-shadow(0 0 5px gold); transform: scale(1); }
+}
+
+/* Responsive */
+@media(max-width: 640px) {
+  .battle-ui { flex-direction: column; height: auto; }
+  .battle-msg { min-height: 80px; border-right: none; border-bottom: 4px solid var(--dark); padding: 14px; font-size: 10px; }
+  .battle-actions { width: 100%; grid-template-columns: 1fr 1fr; }
+  .battle-btn { padding: 16px; font-size: 12px; }
+  
+  .hp-box { min-width: 150px; padding: 8px 10px; }
+  .hp-name { font-size: 9px; }
+  .hp-box.player { bottom: 10%; }
+}
